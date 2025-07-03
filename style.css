@@ -15,4 +15,18 @@ header {
 main {
     padding: 20px;
 }
+/* CSS 트랜지션 예제 */
+.transition-box {
+    width: 100px;
+    height: 100px;
+    background-color: #007bff;
+    margin: 20px auto;
+    transition: background-color 0.5s ease-in-out, transform 0.5s ease-in-out;
+    /* transition: 변경할 속성 시간 타이밍함수 */
+}
+
+.transition-box:hover {
+    background-color: #28a745; /* 호버 시 녹색으로 변경 */
+    transform: scale(1.2) rotate(45deg); /* 호버 시 1.2배 확대 및 45도 회전 */
+}
 /* 기타 스타일 */
