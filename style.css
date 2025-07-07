@@ -1,80 +1,195 @@
-body {
+/* 기본 초기화 */
+html, body {
     font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
+    overflow-x: hidden; /* 가로 스크롤 숨김 */
+    overflow-y: auto;   /* Y축 스크롤 활성화 */
     background: #f4f4f4;
     color: #333;
+    margin: 0;
+    padding: 0;
 }
+
+/* 헤더 */
 header {
+    width: 100%;
     background: #333;
     color: #fff;
     padding: 1rem 0;
     text-align: center;
 }
+
+/* 메인 콘텐츠 영역 (중앙 정렬) */
 main {
+    width: 80vw; /* 뷰포트 너비의 80% */
+    margin: 0 auto; /* 가로 중앙 정렬 */
+    background-color: white; /* 메인 영역 시각적 확인용 */
+    padding: 20px; /* 메인 내부 콘텐츠 패딩 */
+    box-sizing: border-box; /* 패딩이 width에 포함되도록 */
+    position: relative; /* 사이드바 아이콘을 위한 상대 위치 */
+}
+
+/* 푸터 */
+footer {
+    background-color: #333;
+    color: #f1f1f1;
+    width: 100%;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+/* 자기소개 섹션 */
+.self_introduction {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* 프로젝트 썸네일 (슬라이더 컨테이너) */
+.project_thumbnail {
+    height: 420px; /* 고정 높이 */
+    background-color: #9de35b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* 자식 absolute 위치 기준 */
+    overflow: hidden; /* 슬라이드 박스들이 밖으로 나가지 않도록 숨김 */
+    margin: 0 auto; /* main 안에서 project_thumbnail 자체 중앙 정렬 */
+}
+
+/* 슬라이더 컨테이너 (transition_box들을 감싸는 역할) */
+.slider-container {
+    width: 100%; /* 부모 .project_thumbnail의 100% 너비 */
+    height: 100%; /* 부모 .project_thumbnail의 100% 높이 */
+    position: relative; /* 내부 transition_box들의 absolute 위치 기준 */
+}
+
+/* 개별 트랜지션 박스 (슬라이드 아이템) */
+.project_thumbnail .transition_box {
+    width: 70%; /* 슬라이드 박스 크기 조정 (배경 박스들이 보이도록) */
+    height: 70%; /* 슬라이드 박스 크기 조정 */
+    background-color: rgba(0, 123, 255, 0.7); /* 기본적으로 살짝 투명한 배경 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out, background-color 0.3s ease-in-out;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
     padding: 20px;
-}
-/* CSS 트랜지션 예제 */
-.transition-box {
-    width: 100px;
-    height: 100px;
-    background-color: #007bff;
-    margin: 20px auto;
-    transition: background-color 0.5s ease-in-out, transform 0.5s ease-in-out;
-    /* transition: 변경할 속성 시간 타이밍함수 */
+    box-sizing: border-box;
+    pointer-events: none; /* 기본적으로 클릭 이벤트 방지 */
+    visibility: hidden; /* JS에서 초기화할 때까지 숨김 */
 }
 
-.transition-box:hover {
-    background-color: #28a745; /* 호버 시 녹색으로 변경 */
-    transform: scale(1.2) rotate(45deg); /* 호버 시 1.2배 확대 및 45도 회전 */
-}
-/* 기타 스타일 */
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    overflow-x: hidden; /* 가로 스크롤바 방지 */
+/* 활성화된 슬라이드 스타일 */
+.project_thumbnail .transition_box.active {
+    opacity: 1; /* 활성화 시 선명하게 */
+    visibility: visible; /* 활성화 시 보이게 */
+    transform: translate(-50%, -50%) scale(1); /* 원래 크기로 */
+    z-index: 10; /* 가장 앞으로 나오도록 (JS에서 설정됨) */
+    background-color: #007bff; /* 활성화 시 불투명한 색상 */
+    pointer-events: auto; /* 활성화된 박스는 클릭 가능하도록 */
 }
 
-/* 햄버거 아이콘 스타일 */
-.hamburger-icon {
-    font-size: 30px;
+/* 활성화된 슬라이드 호버 효과 */
+.project_thumbnail .transition_box.active:hover {
+    background-color: #56319c;
+    transform: translate(-50%, -50%) scale(1.05) rotate(2deg);
+}
+
+/* JavaScript에서 추가될 이전/다음 슬라이드 클래스 스타일링 */
+.project_thumbnail .transition_box.prev-1,
+.project_thumbnail .transition_box.next-1,
+.project_thumbnail .transition_box.prev-2,
+.project_thumbnail .transition_box.next-2 {
+    visibility: visible; /* 비활성 박스도 보이도록 */
+}
+
+/* 좌우 버튼 */
+.project_thumbnail .btn-right {
+    font-size: 200%;
+    background-color: transparent;
+    border: 0px;
+    position: absolute;
+    right: calc(10% - 20px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
     cursor: pointer;
-    position: fixed; /* 화면에 고정 */
+    color: #555;
+    transition: color 0.2s ease-in-out;
+}
+
+.project_thumbnail .btn-left {
+    font-size: 200%;
+    background-color: transparent;
+    border: 0px;
+    position: absolute;
+    left: calc(10% - 20px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    cursor: pointer;
+    color: #555;
+    transition: color 0.2s ease-in-out;
+}
+
+.project_thumbnail .btn-right:hover,
+.project_thumbnail .btn-left:hover {
+    color: #007bff;
+}
+
+/* 사이드 메뉴 아이콘 */
+.side_menu-icon {
+    font-size: 20px;
+    cursor: pointer;
+    position: fixed;
     top: 20px;
-    right: 20px;
-    z-index: 1001; /* 사이드바 위에 오도록 설정 */
+    right: 0%;
+    z-index: 999;
     color: #333;
     background-color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
+    padding: 30px 5px;
+    border-radius: 5px 0 0 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: right 0.5s ease-in-out;
+}
+
+.side_menu-icon.shifted {
+    right: 250px;
+}
+
+/* 사이드바 열릴 때 본문 스크롤 방지 */
+body.sidebar-open {
+    overflow-y: hidden; /* 사이드바가 열려있을 때만 Y축 스크롤 숨김 */
 }
 
 /* 사이드바 스타일 */
 .sidebar {
-    height: 100%; /* 전체 높이 */
-    width: 0; /* 초기에는 숨겨진 상태 */
-    position: fixed; /* 화면에 고정 */
-    z-index: 1000; /* 콘텐츠 위에 오도록 */
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1000;
     top: 0;
-    right: 0; /* 오른쪽에서 나타나도록 */
-    background-color: #111; /* 배경색 */
-    overflow-x: hidden; /* 가로 스크롤 방지 */
-    transition: 0.5s; /* 너비 변화에 애니메이션 효과 */
-    padding-top: 60px; /* 상단 여백 */
-    box-shadow: -5px 0 15px rgba(0,0,0,0.3); /* 그림자 효과 */
+    right: 0;
+    background-color: #111;
+    transition: 0.5s ease-in-out;
+    padding-top: 60px;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+    overflow-x: hidden;
 }
 
-/* 사이드바 내부 링크 스타일 */
+/* 사이드바 내부 링크 */
 .sidebar a {
-    padding: 15px 25px 15px 35px; /* 위, 우, 아래, 좌 패딩 */
+    padding: 15px 25px 15px 35px;
     text-decoration: none;
     font-size: 22px;
     color: #818181;
-    display: block; /* 블록 요소로 만들어 전체 너비 차지 */
-    transition: 0.3s; /* 호버 효과 애니메이션 */
+    display: block;
+    transition: 0.3s;
 }
 
 /* 사이드바 링크 호버 효과 */
@@ -83,7 +198,7 @@ body {
     background-color: #575757;
 }
 
-/* 사이드바 닫기 버튼 스타일 */
+/* 사이드바 닫기 버튼 */
 .sidebar .close-btn {
     position: absolute;
     top: 0;
@@ -91,19 +206,12 @@ body {
     font-size: 36px;
     margin-left: 50px;
     color: #fff;
-    text-decoration: none; /* 밑줄 제거 */
-    background: none; /* 배경색 제거 */
-    padding: 8px 15px; /* 패딩 조정 */
+    text-decoration: none;
+    background: none;
+    padding: 8px 15px;
+    cursor: pointer;
 }
-
-.close-btn:hover {
-    color: #ff0000 !important; /* 중요한 닫기 버튼은 빨간색 강조 */
-    background-color: transparent !important; /* 호버 시 배경색 제거 */
-}
-
-
-/* 메인 콘텐츠 (사이드바가 열릴 때 밀려나는 효과를 위한) */
-#main-content {
-    transition: margin-right .5s; /* 마진 변화에 애니메이션 효과 */
-    padding: 20px;
+.sidebar .close-btn:hover {
+    color: #ff0000;
+    background-color: transparent;
 }

@@ -5,40 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>lkaru's Profile</title>
     <link rel="stylesheet" href="style.css">
-</head>
+    </head>
 <body>
     <header>
         <h1>환영합니다!</h1>
     </header>
-    <div id="hamburger-menu" class="hamburger-icon">
-        &#9776; </div>
-
-    <aside id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="close-btn">&times;</a> <a href="#home">홈</a>
-        <a href="#about">소개</a>
-        <a href="#portfolio">포트폴리오</a>
-        <a href="#contact">연락처</a>
-        </aside>
     <main>
-        <section id="about">
-            <h2>저는 누구인가요?</h2>
-            <p>여기에 자신을 소개하는 내용을 작성하세요.</p>
+        <section class="self_introduction">
+            <h2>My name is DONGGEON LEE</h2>
         </section>
-        <section id="projects">
-            <h2>프로젝트</h2>
-            <ul>
-                <li><a href="#">프로젝트 1</a></li>
-                <li><a href="#">프로젝트 2</a></li>
-                <section class="animation-section">
-                     <h2>1. CSS 트랜지션 예제</h2>
-                             <div class="transition-box"></div>
-                    <p>상자 위에 마우스를 올려보세요!</p>
-                </section>
-            </ul>
+
+        <section class="project_thumbnail">
+            <div class="slider-container">
+                <div class="transition_box active" data-index="0">
+                    <h3>Project 1: 웹 포트폴리오</h3>
+                    <p>HTML, CSS, JavaScript를 활용하여 제작한 개인 포트폴리오 웹사이트입니다.</p>
+                </div>
+                <div class="transition_box" data-index="1">
+                    <h3>Project 2: </h3>
+                    <p>dw</p>
+                </div>
+                <div class="transition_box" data-index="2">
+                    <h3>Project 3:</h3>
+                    <p>awd.</p>
+                </div>
+            </div>
+
+            <button class="btn-left">❰</button>
+            <button class="btn-right">❱</button>
         </section>
+
+        <div id="side_menu" class="side_menu-icon">❬</div> 
+            <aside id="sidebar" class="sidebar"> 
+            <a href="#home">홈</a>
+            <a href="#setting">설정</a>
+        </aside>
     </main>
     <footer>
-        <p>&copy; 2025 당신의 이름</p>
+        <p>&copy; 2025 lkaru</p>
+        <p>연락처<br>&emsp;전화번호: 010-9452-0623<br>&emsp;이메일: qpalyfe@gmail.com</p>
     </footer>
     <script src="script.js"></script>
 </body>
