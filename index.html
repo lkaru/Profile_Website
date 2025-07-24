@@ -1,40 +1,68 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>lkaru's Profile</title>
     <link rel="stylesheet" href="CSSs/index_style.css">
-    
 </head>
+
 <body>
-    <header class="home">
-        <h1>환영합니다!</h1>
+    <header class="menubar" id="menubar">
+        <a href="#welcome">home</a>
+        <a href="">about me</a>
+        <a href="">project</a>
     </header>
-    <main>
-        <section class="self_introduction">
-            <h2>My name is DONGGEON LEE</h2>
+
+    <main class="main-content">
+        <section class="welcome" id="welcome">
+            <h2 class="title">Welcome to My Portfolio</h2>
         </section>
 
-        <section class="project_thumbnail">
-            <div class="slider-container">
-                </div>
-
-            <button class="btn-left">❰</button>
-            <button class="btn-right">❱</button>
+        <section class="about_me">
+            <h2 class="title">about me</h2>
+            <p class="self-introduce">
+                항상 새로운 것을 추구하는 개발자<br>
+                hello, my name is DONGGEON LEE<br>
+            </p>
         </section>
 
-        <div id="side_menu-icon" class="side_menu-icon">❬</div> 
-            <aside id="sidebar" class="sidebar"> 
-            <a href="#home" >홈</a>
-            <a href="HTMLs/setting.html" >설정</a>
+        <section class="project_section">
+            <div class="project_thumbnail">
+                <div class="slider-container"></div>
+                <button class="btn-left" aria-label="이전 프로젝트">❰</button>
+                <button class="btn-right" aria-label="다음 프로젝트">❱</button>
+            </div>
+        </section>
+
+        <!-- <div id="side_menu-icon" class="side_menu-icon" role="button" aria-controls="sidebar" aria-expanded="false"
+            tabindex="0">❬</div>
+        <aside id="sidebar" class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="#home">home</a>
+                <a href="">about me</a>
+                <a href="">project</a>
+                <a href="HTMLs/setting.html">setting</a>
+            </nav>
         </aside>
-    </main>
-    <footer>
-        <p>&copy; 2025 lkaru</p>
-        <p>연락처<br>&emsp;전화번호: 010-9452-0623<br>&emsp;이메일: qpalyfe@gmail.com</p>
+    </main> -->
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p class="copyright">&copy; 2025 lkaru. All rights reserved.</p>
+            <div class="contact-info">
+                <p><strong>Contact:</strong></p>
+                <p>전화번호: <a href="tel:010-9452-0623">010-9452-0623</a></p>
+                <p>이메일: <a href="mailto:qpalyfe@gmail.com">qpalyfe@gmail.com</a></p>
+            </div>
+        </div>
     </footer>
-    <script src="scripts/sidebar.js"></script>
+
+    <!-- <script src="scripts/sidebar.js"></script> -->
     <script src="scripts/project_slide.js"></script>
+    <script src="scripts/menubar.js"></script>
+
 </body>
+
 </html>

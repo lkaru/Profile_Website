@@ -1,11 +1,16 @@
 /* 기본 초기화 */
-html, body {
+html,
+body {
     font-family: Arial, sans-serif;
-    overflow-x: hidden; /* 가로 스크롤 숨김 */
-    overflow-y: auto;   /* Y축 스크롤 활성화 */
+    overflow-x: hidden;
+    /* 가로 스크롤 숨김 */
+    overflow-y: auto;
+    /* Y축 스크롤 활성화 */
     scroll-behavior: smooth;
-    background: #f4f4f4;
-    color: #333;
+    /* 배경색 변경: 아주 어두운 보라색 (#1A0A2E) */
+    background: #1A0A2E;
+    /* 기본 텍스트 색상 변경: 밝은 라벤더 보라색 (#E0BBE4) */
+    color: #E0BBE4;
     margin: 0;
     padding: 0;
 }
@@ -13,76 +18,207 @@ html, body {
 /* 헤더 */
 header {
     width: 100%;
-    background: #333;
-    color: #fff;
+    background: #3F205F;
+    color: #D799F9;
     padding: 1rem 0;
     text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    /* 그림자 추가 */
 }
 
 /* 메인 콘텐츠 영역 (중앙 정렬) */
 main {
     width: 80vw;
     margin: 0 auto;
-    background-color: white;
-    padding: 20px;
+    /* 배경색 변경: 배경색과 동일하게 (opacity 조절로 차별화 가능) */
+    background-color: #1A0A2E;
+    padding: px 0px;
     box-sizing: border-box;
     position: relative;
 }
 
 /* 푸터 */
 footer {
-    background-color: #333;
-    color: #f1f1f1;
+    /* 배경색 변경: 어두운 보라색 (#3F205F) */
+    background-color: #3F205F;
+    /* 텍스트 색상 변경: 밝은 라벤더 보라색 (#E0BBE4) */
+    color: #E0BBE4;
     width: 100%;
     padding: 1rem 0;
     text-align: center;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+    /* 그림자 추가 */
 }
 
+.menubar {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 100%;
+    height: 50px;
+    background-color: rgba(42, 23, 64, 0.8); /* 어두운 보라 배경 */
+    color: #E0BBE4;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 20px;
+    font-weight: 500;
+    z-index: 1000;
+    border-radius: 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.menubar.shrink {
+    top: 15px;
+    width: 90%;
+    max-width: 600px;
+    height: 60px;
+    font-size: 16px;
+    border-radius: 16px;
+    background-color: rgba(65, 27, 84, 0.8); /* 포인트 보라 계열 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.menubar a.active,
+.sidebar a.active {
+    background-color: #9E3BDB;
+    color: #fff;
+}
+
+
+/* 메뉴 링크 공통 스타일 */
+.menubar a {
+    flex-grow: 1; 
+    text-decoration: none;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.menubar a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #D799F9;  /* 강조 색상 적용 */
+}
+
+
 /* 자기소개 섹션 */
-.self_introduction {
+.about_me .title {
     text-align: center;
     margin-bottom: 30px;
+    padding: 20px;
+    background-color: rgba(63, 32, 95, 0.5);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    color: #E0BBE4;
 }
+
+/* about_me .title 스타일 */
+.welcome {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: #D799F9;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding-top: 35vh;
+    padding-bottom: 45vh;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+    background: linear-gradient(45deg, #7828a0, #D799F9);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+
+.about_me .self-introduce {
+    background-color: rgba(63, 32, 95, 0.6);
+    color: #E0BBE4;
+    padding: 30px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    line-height: 1.8;
+    font-size: 1.1rem;
+    backdrop-filter: blur(8px);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.about_me .self-introduce:hover {
+    background-color: rgba(107, 42, 140, 0.7);
+    transform: translateY(-4px); /* 떠오르는 효과 */
+}
+
+
+.about_me .self-introduce:hover {
+    background-color: rgba(107, 42, 140, 0.7); /* 약간 더 밝은 보라로 hover 효과 */
+    transform: translateY(-4px); /* 약간의 떠오름 효과 */
+}
+
 
 /* 프로젝트 썸네일 (슬라이더 컨테이너) */
 .project_thumbnail {
-    height: 70vh; /* 고정 높이 */
-    background-color: #9de35b;
+    height: 75vh;
+    width: 100%;
+    background: linear-gradient(to bottom right, #1A0A2E, #6B2A8C);
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
     overflow: hidden;
     margin: 0 auto;
+    border-radius: 10px;
+    /* 모서리 둥글게 */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    /* 그림자 추가 */
+    perspective: 1200px;
+    /* 3D 원근감의 강도 조절 (슬라이더 코드에 있었지만 명시적으로 추가) */
 }
 
 /* 슬라이더 컨테이너 (transition_box들을 감싸는 역할) */
 .slider-container {
-    width: 100%;
+    width: 90%;
     height: 100%;
     position: relative;
+    transform-style: preserve-3d;
+    /* 3D 변환 유지 (슬라이더 코드에 있었지만 명시적으로 추가) */
+    transition: transform 0.8s ease-in-out;
+    /* 부드러운 회전 애니메이션 (슬라이더 코드에 있었지만 명시적으로 추가) */
 }
 
 /* 개별 트랜지션 박스 (슬라이드 아이템) */
 .project_thumbnail .transition_box {
     width: 70%;
     height: 70%;
-    background-color: rgba(0, 123, 255, 0.7);
+    /* 배경색 변경: 보조 버튼 색상 계열에 투명도 적용 */
+    background-color: rgba(107, 42, 140, 0.7);
     position: absolute;
     top: 50%;
     left: 50%;
-    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out, background-color 0.3s ease-in-out;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    /* transform 속성 JS에서 제어, transition 속성 변경 */
+    transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out, visibility 0.6s ease-in-out, z-index 0s 0.6s;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    /* 그림자 강화 */
+    border-radius: 8px;
+    /* 모서리 둥글게 */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     color: white;
+    /* 텍스트 색상 */
     text-align: center;
     padding: 20px;
     box-sizing: border-box;
     pointer-events: none;
     visibility: hidden;
+    backface-visibility: hidden;
+    /* 3D 효과를 위해 추가 */
 }
 
 /* 활성화된 슬라이드 스타일 */
@@ -90,15 +226,19 @@ footer {
     opacity: 1;
     visibility: visible;
     transform: translate(-50%, -50%) scale(1);
-    z-index: 10;
-    background-color: #007bff;
+    z-index: 100;
+    /* 가장 앞으로 (기존 10에서 변경) */
+    /* 배경색 변경: 주요 버튼 색상 (#9E3BDB) */
+    background-color: #9E3BDB;
     pointer-events: auto;
 }
 
 /* 활성화된 슬라이드 호버 효과 */
 .project_thumbnail .transition_box.active:hover {
-    background-color: #56319c;
-    transform: translate(-50%, -50%) scale(1.05) rotate(2deg);
+    /* 호버 시 배경색 변경: 더 어두운 보라색 또는 약간 다른 톤 (#6B2A8C 또는 #56319c) */
+    background-color: #6B2A8C;
+    transform: translate(-50%, -50%) scale(1.03);
+    /* 스케일 효과만 남김 (회전 제거) */
 }
 
 /* JavaScript에서 추가될 이전/다음 슬라이드 클래스 스타일링 */
@@ -107,56 +247,120 @@ footer {
 .project_thumbnail .transition_box.prev-2,
 .project_thumbnail .transition_box.next-2 {
     visibility: visible;
+    /* 이 클래스들에 대한 구체적인 transform은 JavaScript에서 제어됨 */
 }
 
+/* 슬라이드 텍스트 (h3, p) 및 이미지 스타일 */
+.project_thumbnail .transition_box h3 {
+    z-index: 20;
+    position: relative;
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    /* 반응형 글꼴 크기 */
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.7);
+    /* 검은색 윤곽선 강화 */
+    color: #D799F9;
+    /* 강조 텍스트 색상 */
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+    /* 텍스트 그림자 강화 */
+    margin-bottom: 10px;
+}
+
+.project_thumbnail .transition_box p {
+    z-index: 10;
+    position: relative;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    /* 반응형 글꼴 크기 */
+    color: #E0BBE4;
+    /* 기본 텍스트 색상 */
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    /* 텍스트 그림자 */
+}
+
+.project_thumbnail .transition_box img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    filter: brightness(0.5) saturate(1.2);
+    /* 이미지를 더 어둡고 채도 있게 */
+    opacity: 0.8;
+    /* 이미지 투명도 조절 */
+}
+
+
 /* 좌우 버튼 */
-.project_thumbnail .btn-right {
-    font-size: 200%;
-    background-color: transparent;
+.project_thumbnail .btn-right,
+.project_thumbnail .btn-left {
+    width: 10%;
+    /* 버튼 너비 */
+    height: 100%;
+    font-size: 300%;
+    background-color: rgba(0, 0, 0, 0.4);
+    /* 배경색 투명도 추가 */
     border: 0px;
     position: absolute;
-    right: calc(10% - 20px);
     top: 50%;
     transform: translateY(-50%);
-    z-index: 10;
+    z-index: 800;
     cursor: pointer;
-    color: #555;
-    transition: color 0.2s ease-in-out;
+    color: #E0BBE4;
+    /* 버튼 아이콘 색상 변경: 밝은 라벤더 보라색 */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    /* 아이콘 중앙 정렬 */
+    align-items: center;
+    /* 세로 중앙 정렬 */
+    justify-content: center;
+    /* 가로 중앙 정렬 */
+}
+
+.project_thumbnail .btn-right {
+    right: 0%;
 }
 
 .project_thumbnail .btn-left {
-    font-size: 200%;
-    background-color: transparent;
-    border: 0px;
-    position: absolute;
-    left: calc(10% - 20px);
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-    cursor: pointer;
-    color: #555;
-    transition: color 0.2s ease-in-out;
+    left: 0%;
 }
 
 .project_thumbnail .btn-right:hover,
 .project_thumbnail .btn-left:hover {
-    color: #007bff;
+    /* 호버 시 배경색 변경: 좀 더 어둡고 선명하게 */
+    background-color: rgba(63, 32, 95, 0.7);
+    /* 호버 시 색상 변경: 강조 텍스트 색상 (#D799F9) */
+    color: #D799F9;
+    transform: translateY(-50%) scale(1.05);
+    /* 호버 시 약간 커지는 효과 */
 }
 
 /* 사이드 메뉴 아이콘 */
 .side_menu-icon {
-    font-size: 20px;
+    font-size: 24px;
+    /* 글꼴 크기 조정 */
     cursor: pointer;
     position: fixed;
     top: 100px;
     right: 0%;
     z-index: 999;
-    color: #333;
-    background-color: white;
-    padding: 30px 5px;
+    /* 색상 변경: 강조 텍스트 색상 (#D799F9) */
+    color: #D799F9;
+    /* 배경색 변경: 보조 버튼 색상 (#6B2A8C) */
+    background-color: #6B2A8C;
+    padding: 15px 10px;
+    /* 패딩 조정 */
     border-radius: 5px 0 0 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    transition: right 0.5s ease-in-out;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    /* 그림자 강화 */
+    transition: right 0.5s ease-in-out, background-color 0.3s ease, color 0.3s ease;
+}
+
+.side_menu-icon:hover {
+    background-color: #9E3BDB;
+    /* 호버 시 주요 버튼 색상 */
+    color: #FFFFFF;
+    /* 호버 시 흰색으로 */
 }
 
 .side_menu-icon.shifted {
@@ -176,11 +380,15 @@ body.sidebar-open {
     z-index: 1000;
     top: 0;
     right: 0;
-    background-color: #111;
+    /* 배경색 변경: 매우 어두운 보라색 (#1A0A2E) */
+    background-color: #1A0A2E;
     transition: 0.5s ease-in-out;
     padding-top: 60px;
-    box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+    /* 그림자 강화 */
     overflow-x: hidden;
+    border-left: 1px solid #3F205F;
+    /* 경계선 추가 */
 }
 
 /* 사이드바 내부 링크 */
@@ -188,14 +396,18 @@ body.sidebar-open {
     padding: 15px 25px 15px 35px;
     text-decoration: none;
     white-space: nowrap;
-    font-size: 22px;
-    color: #818181;
+    font-size: 20px;
+    /* 글꼴 크기 조정 */
+    /* 링크 색상 변경: 밝은 라벤더 보라색 (#E0BBE4) */
+    color: #E0BBE4;
     display: block;
     transition: .3s;
 }
 
 /* 사이드바 링크 호버 효과 */
 .sidebar a:hover {
-    color: #f1f1f1;
-    background-color: #575757;
+    /* 호버 시 색상 변경: 강조 텍스트 색상 (#D799F9) */
+    color: #D799F9;
+    /* 호버 시 배경색 변경: 보조 버튼 색상 (#6B2A8C) */
+    background-color: #6B2A8C;
 }
