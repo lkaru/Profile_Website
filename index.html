@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="thumbnail/thumbnail.png">
     <title>lkaru's Profile</title>
     <link rel="stylesheet" href="CSSs/index_style.css">
 </head>
@@ -11,8 +12,8 @@
 <body>
     <header class="menubar" id="menubar">
         <a href="#welcome">home</a>
-        <a href="">about me</a>
-        <a href="">project</a>
+        <a href="#about_me">about me</a>
+        <a href="#project">project</a>
     </header>
 
     <main class="main-content">
@@ -20,7 +21,7 @@
             <h2 class="title">Welcome to My Portfolio</h2>
         </section>
 
-        <section class="about_me">
+        <section class="about_me" id="about_me">
             <h2 class="title">about me</h2>
             <p class="self-introduce">
                 항상 새로운 것을 추구하는 개발자<br>
@@ -28,7 +29,7 @@
             </p>
         </section>
 
-        <section class="project_section">
+        <section class="project_section" id="project">
             <div class="project_thumbnail">
                 <div class="slider-container"></div>
                 <button class="btn-left" aria-label="이전 프로젝트">❰</button>
