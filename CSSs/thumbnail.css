@@ -1,0 +1,28 @@
+html,
+body {
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+    /* 가로 스크롤 숨김 */
+    overflow-y: auto;
+    /* Y축 스크롤 활성화 */
+    scroll-behavior: smooth;
+    /* 배경색 변경: 아주 어두운 보라색 (#1A0A2E) */
+    background: #1A0A2E;
+    /* 기본 텍스트 색상 변경: 밝은 라벤더 보라색 (#E0BBE4) */
+    color: #E0BBE4;
+    margin: 0;
+    padding: 0;
+}
+.welcome {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: #D799F9;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding-top: 35vh;
+    padding-bottom: 45vh;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+    background: linear-gradient(45deg, #7828a0, #D799F9);
+    -webkit-background-clip: text;
+    color: transparent;
+}
