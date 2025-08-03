@@ -1,213 +1,195 @@
-document.addEventListener('DOMContentLoaded', function () {
+// project-slider.js - 3D 프로젝트 슬라이더 관리 (완성된 버전)
 
-    // --- Slider Configuration ---
-    const slideData = [
-        { title: "Project Alpha", description: "", image: "../images/test.png" },
-        { title: "Project Beta", description: "", image: "../images/beta.png" },
-        { title: "Project Zeta", description: "", image: "../images/zeta.webp" }
-    ];
+class ProjectSlider {
+    constructor(containerSelector = '.slider-container') {
+        this.containerSelector = containerSelector;
+        this.sliderContainer = document.querySelector(containerSelector);
+        this.slides = [];
+        this.currentSlide = 0;
+        this.slideInterval = null;
+        this.initialDelayTimeout = null;
+        this.isAnimating = false;
+        this.autoSlideEnabled = false;
 
-    let slides = [];
-    let currentSlide = 0;
-    let slideInterval; // 슬라이드 자동 전환을 위한 Interval ID 저장 변수
-    let initialDelayTimeout;
-    
-    const sliderContainer = document.querySelector('.project_thumbnail .slider-container');
-    const btnLeft = document.querySelector('.project_thumbnail .btn-left');
-    const btnRight = document.querySelector('.project_thumbnail .btn-right');
+        this.config = {
+            autoSlideDelay: 250,
+            autoSlideInterval: 750,
+            transitionDuration: 600,
+            swipeThreshold: 50,
+            keyboardEnabled: true,
+            touchEnabled: true
+        };
 
+        this.slideData = [
+            { title: "Project Alpha", description: "혁신적인 웹 애플리케이션 개발 프로젝트", image: "", link: "#", tags: ["React", "Node.js", "MongoDB"] },
+            { title: "Project Beta", description: "모바일 친화적 반응형 플랫폼 구축", image: "", link: "#", tags: ["Vue.js", "Express", "MySQL"] },
+            { title: "Project Gamma", description: "AI 기반 데이터 분석 솔루션 개발", image: "", link: "#", tags: ["Python", "TensorFlow", "AWS"] },
+            { title: "Project Delta", description: "실시간 협업 도구 및 대시보드 제작", image: "", link: "#", tags: ["Socket.io", "Redux", "PostgreSQL"] }
+        ];
 
-    // --- Slider Functions and Event Listeners ---
-
-    // 슬라이더 초기화: slideData를 기반으로 HTML 요소 생성
-    function initSlider() {
-        if (!sliderContainer) {
-            console.error("슬라이더 컨테이너를 찾을 수 없습니다!");
-            return;
-        }
-
-        sliderContainer.innerHTML = '';
-
-        slideData.forEach((data, index) => {
-            const slideDiv = document.createElement('div');
-            slideDiv.classList.add('transition_box');
-            slideDiv.setAttribute('data-index', index);
-            slideDiv.transition = 'opacity 0.6s ease-in-out';
-
-            const h3 = document.createElement('h3');
-            h3.textContent = data.title;
-            h3.style.zIndex = '20';
-            h3.style.position = 'relative'; // z-index가 작동하려면 position 속성이 필요합니다.
-            h3.style.fontSize = '30px';
-            h3.style.webkitTextStroke = '1px black'; // 1px 두께의 검은색 윤곽선
-            h3.style.color = 'white'; // 텍스트 내부 색상 (stroke와 대비되게)
-            slideDiv.appendChild(h3);
-
-            const p = document.createElement('p');
-            p.textContent = data.description;
-            p.style.zIndex = '10';
-            p.style.position = 'relative'; // z-index가 작동하려면 position 속성이 필요합니다.
-            slideDiv.appendChild(p);
-
-            if (data.image) {
-                const img = document.createElement('img');
-                img.src = data.image;
-                img.alt = data.title;
-
-                img.style.position = 'absolute';
-                img.style.top = '50%';
-                img.style.left = '50%';
-                img.style.transform = 'translate(-50%, -50%)';
-                img.style.width = '100%';
-                img.style.height = '100%';
-                img.style.objectFit = 'cover';
-                img.style.zIndex = '1';
-
-                slideDiv.appendChild(img);
-            }
-
-            sliderContainer.appendChild(slideDiv);
-        });
-
-        // 요소 생성 후, `slides` NodeList를 다시 선택
-        slides = document.querySelectorAll('.project_thumbnail .transition_box');
-
-        if (slides.length > 0) {
-            showSlide(currentSlide); // 초기 슬라이드 표시
-        }
+        this.init();
     }
 
-    // initSlider를 호출하여 슬라이드 빌드
-    initSlider();
+    init() {
+        if (!this.sliderContainer) return console.error('슬라이더 컨테이너가 없습니다:', this.containerSelector);
+        this.createSlides();
+        this.setupEventListeners();
+        this.showSlide(this.currentSlide);
+    }
 
-    // 슬라이드 표시 및 3D 효과 함수
-    function showSlide(index) {
-        if (!slides.length) return;
+    createSlides() {
+        this.sliderContainer.innerHTML = '';
+        this.slideData.forEach((data, index) => {
+            const slide = this.createSlideElement(data, index);
+            this.sliderContainer.appendChild(slide);
+        });
+        this.slides = document.querySelectorAll('.transition_box');
+    }
 
-        const numSlides = slides.length;
-        const anglePerSlide = 360 / numSlides; // 각 슬라이드당 회전 각도
+    createSlideElement(data, index) {
+        const slide = document.createElement('div');
+        slide.className = 'transition_box';
+        slide.dataset.index = index;
 
-        // 각 슬라이드의 너비를 기준으로 회전 반경 계산
-        const slideWidthValue = slides[0].offsetWidth; // 슬라이드의 실제 너비 (픽셀)
-        // 안전을 위해 slideWidthValue가 0이 아닌지 확인 (초기 로딩 시 0일 수 있음)
-        const radius = (slideWidthValue > 0) ? (slideWidthValue / 2) / Math.tan(Math.PI / numSlides) : 0; // 다각형의 반지름 계산
+        const title = document.createElement('h3');
+        title.textContent = data.title;
+        title.style.cssText = 'z-index:20; position:relative';
+        slide.appendChild(title);
 
-        slides.forEach((slide, i) => {
-            slide.classList.remove('active'); // 모든 active 클래스 제거
+        const desc = document.createElement('p');
+        desc.textContent = data.description;
+        desc.style.cssText = 'z-index:10; position:relative';
+        slide.appendChild(desc);
 
-            const rotationY = anglePerSlide * (i - index);
+        if (data.tags) slide.appendChild(this.createTagsContainer(data.tags));
+        if (data.link && data.link !== '#') slide.appendChild(this.createLinkButton(data.link, data.title));
 
-            // z-index 초기화 (기본적으로 낮은 값)
+        if (data.image) {
+            const img = document.createElement('img');
+            img.src = data.image;
+            img.alt = data.title;
+            img.loading = 'lazy';
+            img.style.cssText = `position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; border-radius:20px; z-index:-1; filter:brightness(0.4) saturate(1.3) blur(1px); transition:filter 0.6s ease;`;
+            img.onerror = () => img.style.display = 'none';
+            slide.appendChild(img);
+        }
+
+        return slide;
+    }
+
+    createTagsContainer(tags) {
+        const container = document.createElement('div');
+        container.className = 'slide-tags';
+        container.style.cssText = 'position:relative; z-index:15; display:flex; flex-wrap:wrap; gap:8px; margin-top:15px; justify-content:center;';
+        tags.forEach(tag => {
+            const tagEl = document.createElement('span');
+            tagEl.className = 'tag';
+            tagEl.textContent = tag;
+            tagEl.style.cssText = 'background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.3); border-radius:12px; padding:4px 12px; font-size:0.85rem; color:white; backdrop-filter:blur(5px);';
+            container.appendChild(tagEl);
+        });
+        return container;
+    }
+
+    createLinkButton(link, title) {
+        const btn = document.createElement('a');
+        btn.href = link;
+        btn.textContent = '자세히 보기';
+        btn.setAttribute('aria-label', `${title} 프로젝트 자세히 보기`);
+        btn.style.cssText = 'position:relative; z-index:25; display:inline-block; margin-top:20px; padding:10px 20px; background:rgba(158,59,219,0.8); color:white; text-decoration:none; border-radius:20px; border:1px solid rgba(255,255,255,0.3); transition:all 0.3s ease; backdrop-filter:blur(5px);';
+        btn.onmouseenter = () => {
+            btn.style.background = 'rgba(215,153,249,0.9)';
+            btn.style.transform = 'translateY(-2px)';
+        };
+        btn.onmouseleave = () => {
+            btn.style.background = 'rgba(158,59,219,0.8)';
+            btn.style.transform = 'translateY(0)';
+        };
+        return btn;
+    }
+
+    showSlide(index) {
+        if (!this.slides.length || this.isAnimating) return;
+        this.isAnimating = true;
+        this.currentSlide = index;
+
+        const total = this.slides.length;
+        const angle = 360 / total;
+        const width = this.slides[0].offsetWidth;
+        const radius = width > 0 ? (width / 2) / Math.tan(Math.PI / total) : 0;
+
+        this.slides.forEach((slide, i) => {
+            slide.classList.remove('active');
+            const rotationY = angle * (i - index);
             slide.style.zIndex = 1;
 
             if (i === index) {
-                // 현재 활성화된 슬라이드
                 slide.classList.add('active');
-                slide.style.zIndex = 100; // 가장 앞으로
+                slide.style.zIndex = 100;
                 slide.style.opacity = 1;
                 slide.style.visibility = 'visible';
-                slide.style.pointerEvents = 'auto'; // 클릭 가능하게
-                // 중앙에 위치시키고 정면을 바라보도록 함
-                slide.style.transform = `
-                    translate(-50%, -50%) /* 중앙 정렬 */
-                    rotateY(${rotationY}deg) /* 현재 슬라이드 위치 */
-                    translateZ(${radius}px) /* 원의 바깥쪽으로 이동 */
-                    scale(1)
-                `;
+                slide.style.pointerEvents = 'auto';
+                slide.style.transform = `translate(-50%, -50%) rotateY(${rotationY}deg) translateZ(${radius}px) scale(1)`;
             } else {
-                // 비활성화된 슬라이드들
-                slide.style.pointerEvents = 'none'; // 클릭 불가능하게
-
-                // 활성화된 슬라이드로부터의 거리 계산 (최단 경로)
                 let diff = i - index;
-                if (diff > numSlides / 2) {
-                    diff -= numSlides;
-                } else if (diff < -numSlides / 2) {
-                    diff += numSlides;
-                }
+                if (diff > total / 2) diff -= total;
+                else if (diff < -total / 2) diff += total;
 
-                const opacity = 1 - (Math.abs(diff) * 0.3); // 거리에 따라 투명도 조절
-                const scale = 1 - (Math.abs(diff) * 0.1); // 거리에 따라 크기 조절
+                const opacity = 1 - (Math.abs(diff) * 0.3);
+                const scale = 1 - (Math.abs(diff) * 0.1);
 
-                // z-index는 카메라에 가까울수록 높게 설정
-                slide.style.zIndex = 50 - Math.abs(diff);
-
-
-                if (Math.abs(diff) <= Math.floor(numSlides / 2)) { // 화면에 보이는 슬라이드만 처리
-                    slide.style.opacity = Math.max(0.1, opacity); // 최소 투명도 0.1
+                if (Math.abs(diff) <= Math.floor(total / 2)) {
+                    slide.style.opacity = Math.max(0.1, opacity);
                     slide.style.visibility = 'visible';
-                    slide.style.transform = `
-                        translate(-50%, -50%) /* 중앙 정렬 */
-                        rotateY(${rotationY}deg) /* 현재 슬라이드 위치 */
-                        translateZ(${radius}px) /* 원의 바깥쪽으로 이동 */
-                        scale(${scale}) /* 거리에 따른 크기 조절 */
-                    `;
+                    slide.style.pointerEvents = 'none';
+                    slide.style.transform = `translate(-50%, -50%) rotateY(${rotationY}deg) translateZ(${radius}px) scale(${scale})`;
                 } else {
-                    // 화면에 보이지 않는 슬라이드는 완전히 숨김
                     slide.style.opacity = 0;
                     slide.style.visibility = 'hidden';
                     slide.style.pointerEvents = 'none';
-                    // 초기 위치로 재설정하여 다음 등장 시 깜빡임 방지
-                    slide.style.transform = `translate(-50%, -50%) scale(0.7)`;
+                    slide.style.transform = 'translate(-50%, -50%) scale(0.7)';
                 }
             }
         });
-    }
-    
 
-    // --- 슬라이더 버튼 이벤트 리스너 (수정됨) ---
-    if (btnRight) {
-        btnRight.addEventListener('mouseenter', () => {
-            // 기존 초기 딜레이 타이머 및 인터벌 정리
-            if (initialDelayTimeout) clearTimeout(initialDelayTimeout);
-            if (slideInterval) clearInterval(slideInterval);
-
-            // 0.25초 후부터 인터벌 시작
-            initialDelayTimeout = setTimeout(() => {
-                // 첫 번째 슬라이드 전환 (0.25초 후)
-                currentSlide = (currentSlide + 1) % slides.length;
-                showSlide(currentSlide);
-
-                // 이후 0.75초마다 슬라이드 넘기기 반복
-                slideInterval = setInterval(() => {
-                    currentSlide = (currentSlide + 1) % slides.length;
-                    showSlide(currentSlide);
-                }, 750); // 0.75초 = 750밀리초
-            }, 250); // 0.25초 = 250밀리초 지연
-        });
-
-        btnRight.addEventListener('mouseleave', () => {
-            // 마우스 벗어날 시 초기 딜레이 타이머 및 자동 전환 중지
-            if (initialDelayTimeout) clearTimeout(initialDelayTimeout);
-            if (slideInterval) clearInterval(slideInterval);
-        });
+        setTimeout(() => { this.isAnimating = false; }, this.config.transitionDuration);
     }
 
-    if (btnLeft) {
-        btnLeft.addEventListener('mouseenter', () => {
-            // 기존 초기 딜레이 타이머 및 인터벌 정리
-            if (initialDelayTimeout) clearTimeout(initialDelayTimeout);
-            if (slideInterval) clearInterval(slideInterval);
+    setupEventListeners() {
+        const leftBtn = document.querySelector('.btn-left');
+        const rightBtn = document.querySelector('.btn-right');
 
-            // 0.25초 후부터 인터벌 시작
-            initialDelayTimeout = setTimeout(() => {
-                // 첫 번째 슬라이드 전환 (0.25초 후)
-                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-                showSlide(currentSlide);
-
-                // 이후 0.75초마다 슬라이드 넘기기 반복
-                slideInterval = setInterval(() => {
-                    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-                    showSlide(currentSlide);
-                }, 750); // 0.75초 = 750밀리초
-            }, 250); // 0.25초 = 250밀리초 지연
-        });
-
-        btnLeft.addEventListener('mouseleave', () => {
-            // 마우스 벗어날 시 초기 딜레이 타이머 및 자동 전환 중지
-            if (initialDelayTimeout) clearTimeout(initialDelayTimeout);
-            if (slideInterval) clearInterval(slideInterval);
-        });
+        if (rightBtn) {
+            rightBtn.addEventListener('mouseenter', () => this.startAutoSlide(1));
+            rightBtn.addEventListener('mouseleave', () => this.stopAutoSlide());
+        }
+        if (leftBtn) {
+            leftBtn.addEventListener('mouseenter', () => this.startAutoSlide(-1));
+            leftBtn.addEventListener('mouseleave', () => this.stopAutoSlide());
+        }
     }
 
+    startAutoSlide(direction = 1) {
+        if (this.initialDelayTimeout) clearTimeout(this.initialDelayTimeout);
+        if (this.slideInterval) clearInterval(this.slideInterval);
+
+        this.initialDelayTimeout = setTimeout(() => {
+            this.currentSlide = (this.currentSlide + direction + this.slides.length) % this.slides.length;
+            this.showSlide(this.currentSlide);
+            this.slideInterval = setInterval(() => {
+                this.currentSlide = (this.currentSlide + direction + this.slides.length) % this.slides.length;
+                this.showSlide(this.currentSlide);
+            }, this.config.autoSlideInterval);
+        }, this.config.autoSlideDelay);
+    }
+
+    stopAutoSlide() {
+        if (this.initialDelayTimeout) clearTimeout(this.initialDelayTimeout);
+        if (this.slideInterval) clearInterval(this.slideInterval);
+    }
+}
+
+// 페이지 로드 시 실행
+window.addEventListener('DOMContentLoaded', () => {
+    new ProjectSlider();
 });

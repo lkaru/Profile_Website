@@ -1,0 +1,1 @@
+const scrollbar = document.getElementById('scrollbar');

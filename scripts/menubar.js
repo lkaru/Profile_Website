@@ -1,9 +1,9 @@
-  const navbar = document.getElementById("menubar");
+const navbar = document.getElementById("menuBar");
 
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 10) {
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 10) {
         navbar.classList.add("shrink");
-      } else {
+    } else {
         navbar.classList.remove("shrink");
-      }
-    });
+    }
+});

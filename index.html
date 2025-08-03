@@ -6,29 +6,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:image" content="thumbnail/thumbnail.png">
     <title>lkaru's Profile</title>
+
+    <link rel="stylesheet" href="CSSs/theme.css">
     <link rel="stylesheet" href="CSSs/index_style.css">
 </head>
 
 <body>
-    <header class="menubar" id="menubar">
+    <!-- 스크롤 진행 바 -->
+    <div class="scrollBar"></div>
+
+    <!-- 배경 파티클 -->
+    <div class="background-particles"></div>
+
+    <!-- 메뉴바 -->
+    <header class="menuBar" id="menuBar">
         <a href="#welcome">home</a>
         <a href="#about_me">about me</a>
         <a href="#project">project</a>
     </header>
 
     <main class="main-content">
-        <section class="welcome" id="welcome">
+        <!-- 환영 문구 -->
+        <section class="welcome fade-in" id="welcome">
             <h2 class="title">Welcome to My Portfolio</h2>
         </section>
 
-        <section class="about_me" id="about_me">
+        <!-- 자기 소개 -->
+        <section class="about_me fade-in" id="about_me">
             <h2 class="title">about me</h2>
-            <p class="self-introduce">
-                항상 새로운 것을 추구하는 개발자<br>
-                hello, my name is DONGGEON LEE<br>
-            </p>
+            <div>
+                <img src="images/Profile.png" alt="Profile Image" class="profile_image">
+                <!-- 신상 정보? -->
+                <!-- 3줄 소개 -->
+                <p class="self-introduce">
+                    항상 새로운 것을 추구하는 개발자<br>
+                    hello, my name is DONGGEON LEE<br>
+                    끊임없이 학습하고 성장하며, 창의적인 솔루션을 만들어내는 것이 저의 열정입니다.<br>
+                    다양한 기술 스택을 활용하여 문제를 해결하고, 사용자 경험을 향상시키는 데 중점을 두고 있습니다.<br>
+                    협업과 소통을 중요시하며, 팀워크를 통해 더 나은 결과를 만들어내는 것을 목표로 합니다.<br>
+                    최신 기술 트렌드에 관심을 가지고 있으며, 지속적으로 발전하는 개발자로서의 길을 걸어가고 있습니다.<br>
+                    함께 성장하고 발전하는 경험을 나누고 싶습니다.<br>
+                </p>
+            </div>
         </section>
 
+        <!-- 프로젝트 썸네일 -->
         <section class="project_section" id="project">
             <div class="project_thumbnail">
                 <div class="slider-container"></div>
@@ -36,18 +58,7 @@
                 <button class="btn-right" aria-label="다음 프로젝트">❱</button>
             </div>
         </section>
-
-        <!-- <div id="side_menu-icon" class="side_menu-icon" role="button" aria-controls="sidebar" aria-expanded="false"
-            tabindex="0">❬</div>
-        <aside id="sidebar" class="sidebar">
-            <nav class="sidebar-nav">
-                <a href="#home">home</a>
-                <a href="">about me</a>
-                <a href="">project</a>
-                <a href="HTMLs/setting.html">setting</a>
-            </nav>
-        </aside>
-    </main> -->
+    </main>
 
     <footer class="main-footer">
         <div class="footer-content">
@@ -60,10 +71,8 @@
         </div>
     </footer>
 
-    <!-- <script src="scripts/sidebar.js"></script> -->
     <script src="scripts/project_slide.js"></script>
     <script src="scripts/menubar.js"></script>
-
 </body>
 
 </html>

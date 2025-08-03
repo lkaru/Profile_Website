@@ -1,0 +1,32 @@
+:root {
+  /* 기본 배경 색상 */
+  --bg-main: #1A0A2E;
+  --bg-secondary: #3F205F;
+  --bg-accent: #6B2A8C;
+  --bg-highlight: #9E3BDB;
+
+  /* 텍스트 색상 */
+  --text-main: #E0BBE4;
+  --text-sub: #D799F9;
+  --text-accent: #9c72a0;
+  --text-light: #fff;
+
+  /* 보조 강조 색 */
+  --purple-light: #7828a0;
+  --purple-mid: #9E3BDB;
+  --purple-deep: #6B2A8C;
+
+  /* 테두리 및 포인트 색상 */
+  --border-accent: #D799F9;
+  --hover-bg: rgba(129, 34, 138, 0.527);
+  --hover-dark: rgba(63, 32, 95, 0.7);
+
+  /* 그림자 색상 */
+  --shadow-dark: rgba(0, 0, 0, 0.4);
+  --shadow-medium: rgba(0, 0, 0, 0.3);
+  --shadow-light: rgba(0, 0, 0, 0.2);
+
+  /* 그라디언트 컬러 */
+  --gradient-main: linear-gradient(45deg, #7828a0, #D799F9, #9E3BDB, #D799F9);
+  --gradient-bg: linear-gradient(to bottom right, #1A0A2E, #6B2A8C);
+}
