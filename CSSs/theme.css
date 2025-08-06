@@ -2,8 +2,8 @@
   /* 기본 배경 색상 */
   --bg-main: #1A0A2E;
   --bg-secondary: #3F205F;
-  --bg-accent: #6B2A8C;
-  --bg-highlight: #9E3BDB;
+  --bg-accent: #7f3ea0;
+  --bg-highlight: #9e42d7;
 
   /* 텍스트 색상 */
   --text-main: #E0BBE4;
@@ -29,4 +29,14 @@
   /* 그라디언트 컬러 */
   --gradient-main: linear-gradient(45deg, #7828a0, #D799F9, #9E3BDB, #D799F9);
   --gradient-bg: linear-gradient(to bottom right, #1A0A2E, #6B2A8C);
+
+    /* 카드 배경 추가 */
+  --card-front-bg: rgba(26, 10, 46, 0.85); /* 슬라이드 앞면 배경 */
+  --card-back-bg: rgba(63, 32, 95, 0.9);   /* 슬라이드 뒷면 배경 */
+
+  /* 버튼 & 링크 */
+  --btn-bg: var(--bg-accent);
+  --btn-hover: var(--bg-highlight);
+  --btn-text: var(--text-main);
 }
+

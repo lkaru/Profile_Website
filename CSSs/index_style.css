@@ -35,6 +35,7 @@ footer {
     color: var(--text-main);
     width: 100%;
     padding: 1rem 0;
+    margin-top: 10vh;
     text-align: center;
     box-shadow: 0 -2px 10px var(--shadow-medium);
 }
@@ -118,10 +119,14 @@ body::-webkit-scrollbar {
     text-shadow: 0 0 50px var(--text-glow);
     z-index: 2;
 }
+
 @keyframes gradientShift {
-    0%, 100%{
+
+    0%,
+    100% {
         background-position: 0% 50%;
     }
+
     50% {
         background-position: 50% 100%;
     }
@@ -135,11 +140,12 @@ body::-webkit-scrollbar {
     left: 50%;
     width: 70vh;
     height: 70vh;
-    background: radial-gradient(circle, rgba(221, 158, 255, 0.19), transparent);
+    background: radial-gradient(circle, rgba(221, 158, 255, 0.238), transparent);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     animation: pulse 3s ease-in-out infinite;
 }
+
 @keyframes pulse {
 
     0%,
@@ -172,13 +178,11 @@ body::-webkit-scrollbar {
     transform: translateX(-50%);
     width: 20rem;
     height: 4px;
-    background: linear-gradient(
-        to right,
-        transparent 0%,
-        var(--border-accent) 30%,
-        var(--border-accent) 70%,
-        transparent 100%
-    );
+    background: linear-gradient(to right,
+            transparent 0%,
+            var(--border-accent) 30%,
+            var(--border-accent) 70%,
+            transparent 100%);
     border-radius: 2px;
     margin-top: 10px;
 }
@@ -216,7 +220,7 @@ body::-webkit-scrollbar {
     z-index: 2;
     display: flex;
     content: '';
-    
+
     background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, .3) 100%);
     background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, .3) 100%);
     -webkit-transform: skewX(-25deg);
@@ -229,9 +233,9 @@ body::-webkit-scrollbar {
 }
 
 @-webkit-keyframes shine {
-  100% {
-    left: 125%;
-  }
+    100% {
+        left: 125%;
+    }
 }
 
 @keyframes shine {
@@ -261,112 +265,195 @@ body::-webkit-scrollbar {
     transform: translateY(-4px);
 }
 
-/*----프로젝트 썸네일 섹션----*/
-
-.protject_section {
-    width: 100%;
-    height: 100vh;
-    padding-top: 10vh;
-    display: flex;
+/*----프로젝트 섹션----*/
+.project_section {
+    width: 80vw;
+    height: 80vh;
+    margin-top: 10vh;
+    display: box-flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
     position: relative;
     background: var(--bg-main);
 }
 
-.project_thumbnail {
-    height: 75vh;
-    width: 100%;
-    position: relative;
-    padding: 50px;
-    background: var(--gradient-bg);
+.slides-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    margin: 0 auto;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px var(--shadow-dark);
-    perspective: 1200px;
+    flex-direction: row;
+    gap: 24px;
+    opacity: 1;
+    visibility: visible;
 }
 
-.slider-container {
-    width: 90%;
+
+/* ---- 슬라이드 기본 구조 ---- */
+.slides-container .slide {
+    width: 40%;
     height: 100%;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.8s ease-in-out;
-}
-
-.project_thumbnail .transition_box {
-    width: 70%;
-    height: 70%;
     background-color: rgba(107, 42, 140, 0.7);
     position: absolute;
     top: 50%;
     left: 50%;
-    transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out, visibility 0.6s ease-in-out, z-index 0s 0.6s;
+    transition: transform 0.6s ease-in-out, opacity 0.4s ease-in-out, z-index 0.4s ease-in-out;
     box-shadow: 0 4px 15px var(--shadow-dark);
-    border-radius: 8px;
+    border-radius: 16px;
+    overflow: hidden;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: space-between;
     color: var(--text-light);
     text-align: center;
     padding: 20px;
     box-sizing: border-box;
-    pointer-events: none;
-    visibility: hidden;
     backface-visibility: hidden;
+    perspective: 1000px;
 }
 
-.project_thumbnail .transition_box.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translate(-50%, -50%) scale(1);
-    z-index: 100;
+.slides-container .slide:hover {
     background-color: var(--bg-highlight);
-    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1.05);
 }
 
-.project_thumbnail .transition_box.active:hover {
-    background-color: var(--bg-accent);
-    transform: translate(-50%, -50%) scale(1.03);
-}
-
-.project_thumbnail .transition_box h3 {
-    z-index: 20;
+/* ---- 내부 회전 구조 ---- */
+.slide .slide-inner {
+    width: 100%;
+    height: 100%;
     position: relative;
-    font-size: clamp(1.5rem, 4vw, 3rem);
-    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.7);
+    background-color: var(--bg-secondary);
+    transform-style: preserve-3d;
+    transition: transform 0.7s ease-in-out;
+    display: flex;
+    border-radius: inherit;
+    justify-content: center;
+    align-items: center;
+}
+
+.slide.flipped .slide-inner {
+    transform: rotateY(180deg);
+}
+
+.slide-front,
+.slide-back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    padding: 20px;
+    top: 0;
+    left: 0;
+    gap: 12px;
+    backface-visibility: hidden;
+    border-radius: inherit;
+    border: 1px solid var(--border-accent);
+    box-sizing: border-box;
+    background: var(--card-front-bg);
+    box-shadow: 0 0 12px var(--shadow-dark);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* 뒷면 회전 */
+.slide-back {
+    transform: rotateY(180deg);
+}
+
+
+/* ---- 슬라이드 앞면 ---- */
+/* ---- 이미지 ---- */
+.slide-front .image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    filter: brightness(0.75) saturate(1.1);
+    opacity: 0.9;
+    box-shadow: 0 0 10px var(--purple-mid);
+}
+
+/* ---- 제목 ---- */
+.slide-front .title {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
     color: var(--text-sub);
-    text-shadow: 0 0 8px var(--shadow-dark);
-    margin-bottom: 10px;
+    text-shadow: 0 0 6px var(--bg-accent);
+    margin: 0px;
 }
 
-.project_thumbnail .transition_box p {
-    z-index: 10;
-    position: relative;
-    font-size: clamp(1rem, 2vw, 1.5rem);
+/* ---- 요약문 ---- */
+.slide-front .summary {
+    font-size: clamp(1rem, 2vw, 1.2rem);
     color: var(--text-main);
+    text-align: center;
+    margin: 0px;
     text-shadow: 0 0 5px var(--shadow-medium);
 }
 
-.project_thumbnail .transition_box img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 1;
-    filter: brightness(0.5) saturate(1.2);
-    opacity: 0.8;
+/* ---- 태그 박스 ---- */
+.slide-front .tag-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
 }
 
-.project_thumbnail .btn-right,
-.project_thumbnail .btn-left {
+/* ---- 태그 ---- */
+.slide-front .tag {
+    background-color: rgba(215, 153, 249, 0.15);
+    color: var(--text-light);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    border: 1px solid var(--border-accent);
+    transition: all 0.3s ease;
+}
+
+.slide-front .tag:hover {
+    background-color: var(--hover-bg);
+    transform: scale(1.05);
+}
+
+/* ---- 슬라이드 뒷면 ---- */
+
+/* ---- 뒷면 제목 ---- */
+.slide-back .title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--text-sub);
+    margin-bottom: 10px;
+    text-shadow: 0 0 5px var(--bg-highlight);
+}
+
+/* ---- 뒷면 설명 ---- */
+.slide-back .description {
+    font-size: 100%;
+    color: var(--text-main);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ---- 링크 버튼 ---- */
+.slide-back .link {
+    padding: 10px 22px;
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 0 10px var(--btn-bg);
+}
+
+.slide-back .link:hover {
+    background-color: var(--btn-hover);
+    transform: scale(1.05);
+    color: white;
+}
+
+
+.project_section .btn-right,
+.project_section .btn-left {
     width: 10%;
     height: 100%;
     font-size: 300%;
@@ -384,16 +471,16 @@ body::-webkit-scrollbar {
     justify-content: center;
 }
 
-.project_thumbnail .btn-right {
+.project_section .btn-right {
     right: 0%;
 }
 
-.project_thumbnail .btn-left {
+.slider-project_section .btn-left {
     left: 0%;
 }
 
-.project_thumbnail .btn-right:hover,
-.project_thumbnail .btn-left:hover {
+.project_section .btn-right:hover,
+.project_section .btn-left:hover {
     background-color: var(--hover-dark);
     color: var(--text-sub);
     transform: translateY(-50%) scale(1.05);
