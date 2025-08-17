@@ -139,36 +139,32 @@ class ProjectSlider {
 
     updateSlideClasses() {
         this.slides.forEach((slide, index) => {
-            slide.classList.remove('active', 'left', 'right', 'flipped');
+            if (slide.classList.contains('flipped')) {
+                slide.classList.toggle('flipped');
+            }
             if (index === this.currentSlide) {
-                slide.classList.add('active');
                 slide.style.opacity = '1';
                 slide.style.transform = 'translate(-50%, -50%) scale(1)';
                 slide.style.zIndex = '100';
-                slide.style.backgroundColor = 'var(--bg-accent)';
                 slide.style.pointerEvents = 'auto';
+                slide.style.filter = 'blur(0px)';
+
 
             } else {
                 const diff = index - this.currentSlide;
-                const opacity = 0.8 - Math.abs(diff) * 0.1;
+                const opacity = 0.7 - Math.abs(diff) * 0.1;
                 const scale = 1 - Math.abs(diff) * 0.15;
                 const offset = -50 + diff * 50;
+                const blurValue = Math.abs(diff) * 1.5;
+
 
                 slide.style.zIndex = `${100 - Math.abs(diff)}`;
                 slide.style.opacity = `${opacity}`;
                 slide.style.transform = `translate(calc(${offset}%), -50%) scale(${scale})`;
+                slide.style.filter = `blur(${blurValue}px)`;
+
             }
         });
-    }
-
-    prevSlide() {
-        this.currentSlide = (this.currentSlide === 0) ? this.slides.length - 1 : this.currentSlide - 1;
-        this.updateSlideClasses();
-    }
-
-    nextSlide() {
-        this.currentSlide = (this.currentSlide === this.slides.length - 1) ? 0 : this.currentSlide + 1;
-        this.updateSlideClasses();
     }
 
 }
