@@ -1,14 +1,12 @@
 class ProjectSlider {
     constructor() {
         this.slidesContainer = document.getElementById('slides-container');
-        this.btnLeft = document.querySelector('.btn-left');
-        this.btnRight = document.querySelector('.btn-right');
 
         this.slideData = [
             {
                 title: "Project Alpha",
                 summary: "혁신적인 웹 애플리케이션 개발 프로젝트",
-                image: "../images/Test.png",
+                image: "images/Test.png",
                 tags: ["React", "Node.js", "MongoDB"],
                 link: "#",
                 description: "최신 웹 기술을 활용한 풀스택 개발 프로젝트 입니다. 사용자 경험을 최우선으로 고려하여 설계되었습니다. 다양한 기능을 제공하며, 반응형 디자인을 지원합니다."
@@ -38,10 +36,6 @@ class ProjectSlider {
         if (!this.slidesContainer) return console.error('slides-container 없음');
         this.createSlides();
         this.updateSlideClasses();
-
-        // 버튼 이벤트 등록
-        this.btnLeft.addEventListener('click', () => this.prevSlide());
-        this.btnRight.addEventListener('click', () => this.nextSlide());
     }
 
     createSlides() {
@@ -131,7 +125,13 @@ class ProjectSlider {
 
         // when slide is clicked, toggle the flipped class
         slide.addEventListener('click', () => {
-            slide.classList.toggle('flipped');
+            if (index === this.currentSlide) {
+                slide.classList.toggle('flipped');
+            }
+            else {
+                this.currentSlide = index;
+                this.updateSlideClasses();
+            }
         });
 
         return slide;
@@ -152,7 +152,7 @@ class ProjectSlider {
                 const diff = index - this.currentSlide;
                 const opacity = 0.8 - Math.abs(diff) * 0.1;
                 const scale = 1 - Math.abs(diff) * 0.15;
-                const offset = -50 + diff * 25;
+                const offset = -50 + diff * 50;
 
                 slide.style.zIndex = `${100 - Math.abs(diff)}`;
                 slide.style.opacity = `${opacity}`;
@@ -160,8 +160,6 @@ class ProjectSlider {
             }
         });
     }
-
-
 
     prevSlide() {
         this.currentSlide = (this.currentSlide === 0) ? this.slides.length - 1 : this.currentSlide - 1;
