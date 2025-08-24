@@ -14,7 +14,7 @@ class ProjectSlider {
             {
                 title: "Project Beta",
                 summary: "모바일 친화적 반응형 플랫폼 구축",
-                image: "",
+                image: "images/Test.png",
                 tags: ["Vue.js", "Express", "MySQL"],
                 link: "#",
                 description: "모바일 UX 최적화는 단순히 예쁜 화면을 만드는 것을 넘어, 사용자의 '경험'을 디자인하는 과정입니다. 이는 마치 잘 설계된 건물처럼, 처음 문을 열고 들어가는 순간부터 모든 공간을 지나 출구로 나설 때까지 불편함이 없도록 만드는 것과 같습니다. 예를 들어, 한 손으로 스마트폰을 잡고 엄지손가락으로 조작하기 편리하도록 중요한 버튼들을 화면 하단에 배치하는 것, 혹은 네트워크가 불안정한 지하철에서도 콘텐츠가 빠르게 표시되도록 이미지를 미리 압축해두는 섬세함이 모두 여기에 포함됩니다."
@@ -23,7 +23,7 @@ class ProjectSlider {
                 title: "Project Gamma",
                 summary: "AI 기반 데이터 분석 솔루션 개발",
                 tags: ["Python", "TensorFlow", "AWS"],
-                image: "",
+                image: "images/Test.png",
                 link: "#",
                 description: "AI를 활용한 데이터 분석 시스템 구축"
             }
